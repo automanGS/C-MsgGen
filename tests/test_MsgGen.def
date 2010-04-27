@@ -1,0 +1,83 @@
+/*
+ * Tests simple fixed-width int
+ */
+MESSAGE (MSG_GEN_TEST_SIMPLE_T, MSG_GEN_TEST_SIMPLE,
+    MEMBER (int16_t, m_int16)
+)
+
+/*
+ * Tests built-in primitives
+ */
+MESSAGE (MSG_GEN_TEST_PRIMITIVES_T, MSG_GEN_TEST_PRIMITIVES,
+    MEMBER (int8_t, m_int8)
+    MEMBER (uint8_t, m_uint8)
+    MEMBER (int16_t, m_int16)
+    MEMBER (uint16_t, m_uint16)
+    MEMBER (int32_t, m_int32)
+    MEMBER (uint32_t, m_uint32)
+    MEMBER (char, m_char)
+)
+
+/*
+ * Tests array members
+ */
+MESSAGE (MSG_GEN_TEST_ARRAYS_T, MSG_GEN_TEST_ARRAYS,
+    MEMBER_ARRAY (int8_t, ma_int8, 3)
+    MEMBER_ARRAY (uint8_t, ma_uint8, 3)
+    MEMBER_ARRAY (int16_t, ma_int16, 3)
+    MEMBER_ARRAY (uint16_t, ma_uint16, 3)
+    MEMBER_ARRAY (int32_t, ma_int32, 3)
+    MEMBER_ARRAY (uint32_t, ma_uint32, 3)
+    MEMBER_ARRAY (char, ma_char, 3)
+)
+
+/*
+ * Tests nested structures
+ */
+MESSAGE (MSG_GEN_TEST_NESTED_T, MSG_GEN_TEST_NESTED,
+    MEMBER (MSG_GEN_TEST_PRIMITIVES_T, nested)
+)
+
+/*
+ * Tests array of nested structures
+ */
+MESSAGE (MSG_GEN_TEST_NESTED_ARRAY_T, MSG_GEN_TEST_NESTED_ARRAY,
+    MEMBER_ARRAY (MSG_GEN_TEST_SIMPLE_T, na, 3)
+)
+
+/*
+ * Tests zero-length array member
+ */
+MESSAGE (MSG_GEN_TEST_EMPTY_ARRAY_T, MSG_GEN_TEST_EMPTY_ARRAY,
+    MEMBER (uint16_t, m_uint16)
+    MEMBER_ARRAY (uint16_t, ma_empty, 0)
+    MEMBER_FLEXARRAY (uint16_t, ma_flex)
+)
+
+/*
+ * Tests simple custom type
+ */
+TYPE (uint16_t, ID_T)
+
+MESSAGE (MSG_GEN_TEST_TYPE_T, MSG_GEN_TEST_TYPE,
+    MEMBER (ID_T, m_id)
+)
+
+/*
+ * Tests nested custom type
+ */
+TYPE (ID_T, NESTED_ID_T)
+
+MESSAGE (MSG_GEN_TEST_NESTED_TYPE_T, MSG_GEN_TEST_NESTED_TYPE,
+    MEMBER (NESTED_ID_T, m_nested_id)
+)
+
+/*
+ * Tests nested custom message type
+ */
+TYPE (MSG_GEN_TEST_SIMPLE_T, NESTED_MSG_TYPE_T)
+
+MESSAGE (MSG_GEN_TEST_NESTED_MSG_TYPE_T, MSG_GEN_TEST_NESTED_MSG_TYPE,
+    MEMBER (NESTED_MSG_TYPE_T, m_nested_msg_type)
+)
+
