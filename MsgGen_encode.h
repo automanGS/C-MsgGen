@@ -12,20 +12,26 @@
 
 #include "MsgGenEncodePrimitives.h"
 
-/* Generates declarations for simple packed encoding */
+/* Generates definitions for simple packed encoding */
+
+/* Static functions by default */
+#if !defined LINKAGE
+    #define LINKAGE static
+#endif
 
 /*
  * Encode the given msg type to a packed byte array
  *
- * TYPE: the type to encode, must be a single token
- * NAME: variable name of the message to encode
+ * TYPE: the type to decode, must be a single token
+ * src: message to encode
+ * dst: destination packed byte array
  */
 #define MsgGenEncode(TYPE, src, dst) \
     MsgGenEncode_##TYPE(src, dst)
 
 /* Generate message encoding code */
 #define MESSAGE(TYPE, NAME, MEMBERS) \
-static uint8_t * \
+LINKAGE uint8_t * \
 MsgGenEncode_##TYPE(const TYPE * src, \
                     uint8_t* dst) \
 { \
@@ -56,7 +62,7 @@ MsgGenEncode_##TYPE(const TYPE * src, \
     } \
 
 #define TYPE(BASE_TYPE, TYPE_NAME) \
-static inline void \
+LINKAGE void \
 MsgGenEncode_##TYPE_NAME(const TYPE_NAME * src, \
                          uint8_t* dst) \
 { \

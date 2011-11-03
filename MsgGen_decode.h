@@ -12,20 +12,26 @@
 
 #include "MsgGenDecodePrimitives.h"
 
-/* Generates declarations for simple packed decoding */
+/* Generates definitions for simple packed decoding */
+
+/* Static functions by default */
+#if !defined LINKAGE
+    #define LINKAGE static
+#endif
 
 /*
  * Decode the given msg type from a packed byte array
  *
  * TYPE: the type to decode, must be a single token
- * NAME: variable name of the message to decode
+ * src: packed byte array to decode
+ * dst: destination decoded message
  */
 #define MsgGenDecode(TYPE, src, dst) \
     MsgGenDecode_##TYPE(src, dst)
 
 /* Generate message decoding code */
 #define MESSAGE(TYPE, NAME, MEMBERS) \
-static TYPE * \
+LINKAGE TYPE * \
 MsgGenDecode_##TYPE(const uint8_t* src, \
                     TYPE * dst) \
 { \
@@ -56,7 +62,7 @@ MsgGenDecode_##TYPE(const uint8_t* src, \
     } \
 
 #define TYPE(BASE_TYPE, TYPE_NAME) \
-static inline void \
+LINKAGE void \
 MsgGenDecode_##TYPE_NAME(const uint8_t* src, \
                          TYPE_NAME * dst) \
 { \

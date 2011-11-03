@@ -12,6 +12,11 @@
 
 #include "MsgGenPrintPrimitives.h"
 
+/* Static functions by default */
+#if !defined LINKAGE
+    #define LINKAGE static
+#endif
+
 /*
  * Print the given msg type
  *
@@ -24,7 +29,9 @@
 /* Generate message printing code */
 
 #define MESSAGE(TYPE, NAME, MEMBERS) \
-static void MsgGenPrint_##TYPE(const TYPE * src, int depth) \
+LINKAGE void \
+MsgGenPrint_##TYPE(const TYPE * src, \
+                                int depth) \
 { \
     MsgGenPrint_depth(depth); \
     printf("%s %s = {\n", #TYPE, #NAME); \
@@ -74,7 +81,9 @@ static void MsgGenPrint_##TYPE(const TYPE * src, int depth) \
         } \
 
 #define TYPE(BASE_TYPE, TYPE_NAME) \
-static inline void MsgGenPrint_##TYPE_NAME(const TYPE_NAME * src, int depth) \
+LINKAGE void \
+MsgGenPrint_##TYPE_NAME(const TYPE_NAME * src, \
+                        int depth) \
 { \
     printf("(%s) ", #TYPE_NAME); \
     MsgGenPrint_##BASE_TYPE((const BASE_TYPE *) src, depth); \

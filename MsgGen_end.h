@@ -15,6 +15,7 @@
     #undef MEMBER_ARRAY
     #undef MEMBER_FLEXARRAY
 #undef TYPE
+#undef LINKAGE
 
 /* No include guard for MSG_GEN_END_H_ */
 

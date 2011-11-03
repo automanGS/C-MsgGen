@@ -12,6 +12,7 @@ INDENT_FLAGS := --k-and-r-style \
 				--blank-lines-after-commas \
 				--braces-after-if-line \
 				--brace-indent0 \
+				--break-function-decl-args \
 				--cuddle-do-while \
 				--declaration-comment-column0 \
 				--no-tabs
@@ -28,6 +29,10 @@ OUT_TEST_MSGGEN_PREP := tmp_MsgGen.c
 OUT_TEST_MSGGEN_ASM := tmp_MsgGen.S
 OUT_TEST_MSGGEN_INTERLEAVED := tmp_MsgGen.asm
 
+DIR_LIB_TESTMSGGEN := lib
+OBJS_TEST_LIBTESTMSGGEN := test_LibTestMsgGen.o
+OUT_LIB_TESTMSGGEN := $(DIR_LIB_TESTMSGGEN)/libTestMsgGen.a
+OUT_TEST_LIBTESTMSGGEN := test_LibTestMsgGen
 
 default: $(OBJS) test_main.c
 	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -o $(OUT_TEST_MSGGEN) test_main.c $(OBJS)
@@ -47,5 +52,39 @@ interleaved: $(OBJS)
 
 .PHONY: clean
 clean:
-	rm -f $(OBJS) *.c~ $(OUT_TEST_MSGGEN) $(OUT_TEST_MSGGEN_PREP) $(OUT_TEST_MSGGEN_ASM) $(OUT_TEST_MSGGEN_INTERLEAVED)
+	rm -f $(OBJS) *.c~ *.a *.i *.i~ $(OUT_TEST_MSGGEN) $(OUT_TEST_MSGGEN_PREP) $(OUT_TEST_MSGGEN_ASM) $(OUT_TEST_MSGGEN_INTERLEAVED)
+
+%.h.i : %.h
+	$(CC) -P -E $(CFLAGS) $(DEFINES) $(INCLUDES) -o $@ $<
+	$(INDENT) $(INDENT_FLAGS) $@
+
+%.c.i : %.c
+	$(CC) -P -E $(CFLAGS) $(DEFINES) $(INCLUDES) -o $@ $<
+	$(INDENT) $(INDENT_FLAGS) $@
+
+%.a : %.o
+	$(AR) $(ARFLAGS) $@ $<
+
+libdir:
+	@mkdir -p lib
+
+lib/%.c : %.c
+	cp $< $@
+
+lib/%.h : %.h.i
+	cp $< $@
+
+libprep: libTestMsgGen.h.i libTestMsgGen.c.i
+
+libhdr: libdir lib/libTestMsgGen.h
+
+lib: libdir libhdr $(OUT_LIB_TESTMSGGEN)
+
+.PHONY: libclean
+libclean:
+	@rm -f $(OUT_TEST_LIBTESTMSGGEN) $(OBJS_TEST_LIBTESTMSGGEN) *.c~ *.a *.i *.i~ 
+	@rm -rf lib/
+
+libtest: lib $(OBJS_TEST_LIBTESTMSGGEN) test_main.c
+	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -I $(DIR_LIB_TESTMSGGEN) -L$(DIR_LIB_TESTMSGGEN) -o $(OUT_TEST_LIBTESTMSGGEN) test_main.c $(OBJS_TEST_LIBTESTMSGGEN) -lTestMsgGen
 
