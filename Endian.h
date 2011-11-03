@@ -7,7 +7,11 @@
 #if !defined ENDIAN_H_
 #define ENDIAN_H_
 
-#include <stdint.h>
+/* Users should provide their own definitions for c99 stdint types.
+ * We don't include them here.
+ *
+ * #include <stdint.h>
+ */
 
 #define bswap16(x) \
     ((((x) >> 8) & 0x00ffu) | \

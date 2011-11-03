@@ -9,7 +9,12 @@
 #ifndef BYTEORDER_H_
 #define BYTEORDER_H_
 
-#include <stdint.h> /* types */
+/* Users should provide their own definitions for c99 stdint types.
+ * We don't include them here.
+ *
+ * #include <stdint.h>
+ */
+
 #include "Endian.h"
 
 /* Internal inlines  - use [be|le][16|32][enc|dec] functions instead */

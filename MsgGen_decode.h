@@ -25,8 +25,9 @@
 
 /* Generate message decoding code */
 #define MESSAGE(TYPE, NAME, MEMBERS) \
-static TYPE * MsgGenDecode_##TYPE(const uint8_t* src, \
-                                  TYPE * dst) \
+static TYPE * \
+MsgGenDecode_##TYPE(const uint8_t* src, \
+                    TYPE * dst) \
 { \
     assert(src); \
     assert(dst); \
@@ -55,8 +56,9 @@ static TYPE * MsgGenDecode_##TYPE(const uint8_t* src, \
     } \
 
 #define TYPE(BASE_TYPE, TYPE_NAME) \
-static inline void MsgGenDecode_##TYPE_NAME(const uint8_t* src, \
-                                            TYPE_NAME * dst) \
+static inline void \
+MsgGenDecode_##TYPE_NAME(const uint8_t* src, \
+                         TYPE_NAME * dst) \
 { \
     MsgGenDecode_##BASE_TYPE(src, (BASE_TYPE *) dst); \
 } \

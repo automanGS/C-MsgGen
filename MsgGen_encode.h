@@ -25,8 +25,9 @@
 
 /* Generate message encoding code */
 #define MESSAGE(TYPE, NAME, MEMBERS) \
-static uint8_t * MsgGenEncode_##TYPE(const TYPE * src, \
-                                     uint8_t* dst) \
+static uint8_t * \
+MsgGenEncode_##TYPE(const TYPE * src, \
+                    uint8_t* dst) \
 { \
     assert(src); \
     assert(dst); \
@@ -55,8 +56,9 @@ static uint8_t * MsgGenEncode_##TYPE(const TYPE * src, \
     } \
 
 #define TYPE(BASE_TYPE, TYPE_NAME) \
-static inline void MsgGenEncode_##TYPE_NAME(const TYPE_NAME * src, \
-                                            uint8_t* dst) \
+static inline void \
+MsgGenEncode_##TYPE_NAME(const TYPE_NAME * src, \
+                         uint8_t* dst) \
 { \
     MsgGenEncode_##BASE_TYPE((const BASE_TYPE *) src, dst); \
 } \
