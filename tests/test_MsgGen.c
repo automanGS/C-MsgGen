@@ -8,8 +8,6 @@
 
 char* test_MsgGen(void);
 
-#define MemMgrAllocType(T) (T*)malloc(sizeof(T))
-
 /* Message declarations */
 #include "MsgGen_declare.h"
     #include "test_MsgGen.def"
