@@ -50,5 +50,9 @@ static inline void
 MsgGenPrint_uint32_t(const uint32_t* src, unsigned int depth)
 { printf("%u", *src); };
 
+static inline void
+MsgGenPrint_float(const float* src, unsigned int depth)
+{ printf("%f", *src); };
+
 #endif // MSG_GEN_PRINT_PRIMITIVES_H_
 

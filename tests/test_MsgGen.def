@@ -16,6 +16,7 @@ MESSAGE (MSG_GEN_TEST_PRIMITIVES_T, MSG_GEN_TEST_PRIMITIVES,
     MEMBER (int32_t, m_int32)
     MEMBER (uint32_t, m_uint32)
     MEMBER (char, m_char)
+    MEMBER (float, m_float)
 )
 
 /*
@@ -29,6 +30,7 @@ MESSAGE (MSG_GEN_TEST_ARRAYS_T, MSG_GEN_TEST_ARRAYS,
     MEMBER_ARRAY (int32_t, ma_int32, 3)
     MEMBER_ARRAY (uint32_t, ma_uint32, 3)
     MEMBER_ARRAY (char, ma_char, 3)
+    MEMBER_ARRAY (float, ma_float, 3)
 )
 
 /*

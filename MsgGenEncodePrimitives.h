@@ -43,5 +43,9 @@ static inline void
 MsgGenEncode_uint32_t(const uint32_t* src, uint8_t* dst)
 { le32enc(dst, *src); };
 
+static inline void
+MsgGenEncode_float(const float* src, uint8_t* dst)
+{ le32enc(dst, *((uint32_t*) src)); };
+
 #endif // MSG_GEN_ENCODE_PRIMITIVES_H_
 

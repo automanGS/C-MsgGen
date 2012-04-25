@@ -5,6 +5,7 @@
 #include "minunit.h"
 #include <stdint.h>
 #include <string.h> /* memset, memcmp */
+#include <float.h>
 
 char* test_MsgGen(void);
 
@@ -42,6 +43,7 @@ void init_MSG_GEN_TEST_PRIMITIVES_T(MSG_GEN_TEST_PRIMITIVES_T* m)
     m->m_int32 = INT32_MIN;
     m->m_uint32 = UINT32_MAX;
     m->m_char = 'a';
+    m->m_float = -FLT_MAX;
 }
 
 void init_MSG_GEN_TEST_NESTED_T(MSG_GEN_TEST_NESTED_T* m)
@@ -78,6 +80,10 @@ void init_MSG_GEN_TEST_ARRAYS_T(MSG_GEN_TEST_ARRAYS_T* m)
     m->ma_char[0] = 'a';
     m->ma_char[1] = 'b';
     m->ma_char[2] = 'c';
+
+    m->ma_float[0] = -FLT_MAX;
+    m->ma_float[1] = FLT_MIN;
+    m->ma_float[2] = FLT_MAX;
 }
 
 void init_MSG_GEN_TEST_NESTED_ARRAY_T(MSG_GEN_TEST_NESTED_ARRAY_T* m)
@@ -128,6 +134,7 @@ void init_MSG_GEN_TEST_NESTED_MSG_TYPE_T(MSG_GEN_TEST_NESTED_MSG_TYPE_T* m)
     MsgGenPrint(TYPE, &orig); \
     MsgGenEncode(TYPE, &orig, encoded); \
     MsgGenDecode(TYPE, encoded, &decoded); \
+    MsgGenPrint(TYPE, &decoded); \
  \
     mu_assert("test_"#TYPE, \
               memcmp(&orig, &decoded, sizeof(TYPE)) == 0); \

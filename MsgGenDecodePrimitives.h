@@ -43,5 +43,12 @@ static inline void
 MsgGenDecode_uint32_t(const uint8_t* src, uint32_t* dst)
 { *dst = (uint32_t)le32dec(src); };
 
+static inline void
+MsgGenDecode_float(const uint8_t* src, float* dst)
+{
+    uint32_t tmp32 = le32dec(src);
+    *dst = *((float*) &tmp32);
+};
+
 #endif // MSG_GEN_DECODE_PRIMITIVES_H_
 
